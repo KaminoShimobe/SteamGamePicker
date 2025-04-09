@@ -13,10 +13,10 @@ const recommendSteamGameFunctionDeclaration = {
           type: Type.STRING,
           description: "The user's Steam vanity username",
         },
-        // genre: {
-        //   type: Type.STRING,
-        //   description: "Preferred game genre (e.g. action, strategy, indie)",
-        // },
+        // owned: {
+        //     type: Type.BOOLEAN,
+        //     description: "Whether or not the game is owned in the user's Steam Library or not.",
+        //   },
       },
       required: ["username"],
     },
