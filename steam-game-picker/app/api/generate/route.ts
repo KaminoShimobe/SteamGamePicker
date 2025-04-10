@@ -97,8 +97,12 @@ export async function POST(request: Request) {
       });
 
       console.log(finalResponse.text);
+
+      const recommendedGames = functionResponse.response.userGames;
+
+
       const newText = await finalResponse.text;
-      return NextResponse.json({ result: newText });
+      return NextResponse.json({ result: newText, games: recommendedGames});
     } else {
       console.log("No function call found in the response.");
       console.log(result.text);
