@@ -1,6 +1,4 @@
 import { NextResponse } from 'next/server';
-import googleai from '@/lib/googleai'; // should export a valid SDK instance
-import { use } from 'react';
 import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLEAI_API_KEY });
@@ -44,7 +42,7 @@ export async function POST(request: Request) {
 
       // Fetch the user's owned games and Steam game library
       let userGames = await callSteamAPI(username);
-      let libraryGames = await fetchAllSteamGames();
+      const libraryGames = await fetchAllSteamGames();
       
       // Combine the user's games with the library
       userGames = userGames.concat(libraryGames);
@@ -189,11 +187,24 @@ async function fetchAllSteamGames() {
     const response = await fetch(`https://api.steampowered.com/ISteamApps/GetAppList/v2/`);
     const data = await response.json();
 
+    //unused randomGameArranger
+    const getRandomGames = (games: { appid: number; name: string }[], count = 100) => {
+      // Shuffle using Fisher-Yates
+      for (let i = games.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [games[i], games[j]] = [games[j], games[i]];
+      }
+    
+      return games.slice(0, count);
+    };
+
     if (data.applist && data.applist.apps) {
       const appIds = data.applist.apps.map((app: { appid: any; }) => app.appid);
       const totalApps = appIds.length;
       console.log(`Total apps available: ${totalApps}`);
       
+
+     
       const allGames = [];
       // Use chunking and fetch details for multiple app IDs in parallel
       for (let i = 0; i < Math.min(MAX_PAGES, Math.ceil(totalApps / CHUNK_SIZE)); i++) {
