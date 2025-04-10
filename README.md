@@ -1,6 +1,7 @@
 # SteamGamePicker
 A Gemini Powered Chatbot that recommends videogames based on your steam library build in node.js, react, and typescript.
 
+![image](https://github.com/user-attachments/assets/223879c2-daae-4dd2-a4f6-46c60aed6a9b)
 
 __Project Milestones__
 
@@ -74,5 +75,5 @@ const recommendSteamGameFunctionDeclaration = {
  ## Create Frontend to interact with AI and Steam Web API
 
  Finally, I created a simple front end to represent this chatbot and give it more flavor. This includes typed out responses, a loading circle, and an icon! Check out below:
- 
+
 ![image](https://github.com/user-attachments/assets/223879c2-daae-4dd2-a4f6-46c60aed6a9b)
