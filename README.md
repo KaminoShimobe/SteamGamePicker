@@ -76,4 +76,5 @@ const recommendSteamGameFunctionDeclaration = {
 
  Finally, I created a simple front end to represent this chatbot and give it more flavor. This includes typed out responses, a loading circle, and an icon! Check out below:
 
-![image](https://github.com/user-attachments/assets/223879c2-daae-4dd2-a4f6-46c60aed6a9b)
+
+![SteamGamePicker](https://github.com/user-attachments/assets/d601bb77-d3d5-45ee-8c60-dfa341c65786)
