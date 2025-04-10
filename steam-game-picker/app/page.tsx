@@ -2,15 +2,22 @@
 
 import { useState, FormEvent } from 'react';
 import GameCard from '../components/gamecard';
+import TypingIndicator from '@/components/typingIndicator';
+import { Typewriter } from 'react-simple-typewriter';
+import { FaRobot } from 'react-icons/fa';
+import Image from "next/image";
 
 export default function Home() {
   const [prompt, setPrompt] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [response, setResponse] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [id, setId] = useState<string>("");
-
+  
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    setResponse("")
 
     const res = await fetch("/api/generate", {
       method: "POST",
@@ -19,12 +26,15 @@ export default function Home() {
       },
       body: JSON.stringify({ prompt }),
     });
-
+    
     const data = await res.json();
     if (res.ok) {
+      setLoading(false);
       setResponse(data.result);
+      
     } else {
       console.error(data.error);
+      setLoading(false);
     }
   };
 
@@ -74,7 +84,7 @@ export default function Home() {
 
         {/* Prompt Form */}
         <form onSubmit={handleSubmit} className="space-y-2">
-          <label className="block text-blue-600 font-medium">Ask Steam Game Picker:</label>
+          <label className="block text-blue-200 font-medium">Ask Steam Game Picker:</label>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -85,15 +95,28 @@ export default function Home() {
             type="submit"
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
+            
             Send
           </button>
         </form>
 
         {/* Chat Response */}
-        {response && (
+        {loading && <TypingIndicator />}
+        <img
+  src="/SGP_Icon.png"
+  alt="SGP bot"
+  className="w-10 h-10 rounded-full border border-blue-400"
+/>
+        {response && !loading && (
           <div className="bg-gray-100 p-4 rounded-lg border border-blue-200">
             <h2 className="text-blue-600 font-semibold mb-2">Steam Game Picker says:</h2>
-            <p className="text-gray-800 whitespace-pre-line">{response}</p>
+            <p className="text-gray-800 whitespace-pre-line leading-relaxed">
+                  <Typewriter
+            words={[response]}
+            typeSpeed={30}
+            cursor
+            cursorStyle="_"
+          /></p>
           </div>
         )}
       </div>
