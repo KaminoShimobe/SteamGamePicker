@@ -4,10 +4,10 @@ A Gemini Powered Chatbot that recommends videogames based on your steam library 
 
 __Project Milestones__
 
-✔️ Obtain working LLM Model API
-✔️ Connect with Steam Web API to obtain game
-✔️ Train LLM to respond to Steam Web API
-✔️ Create Frontend to interact with AI and Steam Web API
+- ✔️ Obtain working LLM Model API
+- ✔️ Connect with Steam Web API to obtain game
+- ✔️ Train LLM to respond to Steam Web API
+- ✔️ Create Frontend to interact with AI and Steam Web API
 - Implement Random steam store selection
 - Create Game cards for each of the pulled games
 
