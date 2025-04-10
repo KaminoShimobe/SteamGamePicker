@@ -13,6 +13,7 @@ export default function Home() {
   const [response, setResponse] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [id, setId] = useState<string>("");
+  const [games, setGames] = useState<any[]>([]);
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +32,10 @@ export default function Home() {
     if (res.ok) {
       setLoading(false);
       setResponse(data.result);
-      
+      // const parsed = JSON.parse(data.result); // Or directly use `data.result.games` if already parsed
+      if (data.games) {
+        setGames(data.games); // Store the recommended games
+      }
     } else {
       console.error(data.error);
       setLoading(false);
@@ -53,9 +57,9 @@ export default function Home() {
   
 
   return (
-    <div className="min-h-screen bg-blue-300 flex flex-col items-center p-6">
+    <div className="min-h-screenb text-blue-300 g-slate-50 flex flex-col items-center p-6">
       <div className="w-full max-w-2xl bg-gray-800 shadow-xl rounded-xl p-6 space-y-6">
-        <h1 className="text-4xl font-bold text-blue-700">Steam Game Picker</h1>
+        <h1 className="text-4xl font-bold text-blue-700 text-start">Steam Game Picker</h1>
         <h2 className="text-2xl font-bold text-blue-500 text-center">Suggest steam games based on your steam username!</h2>
 
         {/* Steam Username Form */}
@@ -91,6 +95,7 @@ export default function Home() {
             placeholder="Recommend me a game based on my library..."
             className="w-full h-24 p-2 border border-blue-300 rounded resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
+          <div className='text-end'>
           <button
             type="submit"
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
@@ -98,6 +103,7 @@ export default function Home() {
             
             Send
           </button>
+          </div>
         </form>
 
         {/* Chat Response */}
@@ -119,7 +125,19 @@ export default function Home() {
           /></p>
           </div>
         )}
+
+        {/* {games.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
+            {games
+              .filter((game) => game && (game.appid || game.name))
+              .map((game, index) => (
+                <GameCard key={game.appid || game.name || index} game={game} />
+              ))}
+          </div>
+        )} */}
       </div>
     </div>
+
+    
   );
 }
